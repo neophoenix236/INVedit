@@ -323,6 +323,7 @@ namespace INVedit
 			this.Controls.Add(this.tabControl);
 			this.Controls.Add(this.boxItems);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(678, 32656);
 			this.MinimumSize = new System.Drawing.Size(678, 388);

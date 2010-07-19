@@ -41,19 +41,16 @@ namespace INVedit
 					}
 					split = line.Split(new char[]{' '}, StringSplitOptions.RemoveEmptyEntries);
 					Exception ex = new DataException("Invalid number of colums at line "+i+" in file '"+path+"'.");
-					if (line[0]=='~') { if (split.Length != 5) throw ex; }
+					if (line[0]=='~') { if (split.Length != 4) throw ex; }
 					else { if (split.Length < 4 || split.Length > 5) throw ex; }
 					string name = split[1].Replace('_', ' ');
-					Image image;
-					try { image = LoadImage(split[2]); }
-					catch (Exception e) { throw new DataException("Failed to load image '"+split[2]+"' at line "+i+" in file '"+path+"' ("+e.Message+").", e); }
 					if (line[0]=='~') {
 						short icon;
-						try { icon = short.Parse(split[3]); }
+						try { icon = short.Parse(split[2]); }
 						catch (Exception e) { throw new DataException("Failed to parse column 'ICON' at line "+i+" in file '"+path+"'.", e); }
 						if (!items.ContainsKey(icon)) throw new DataException("Invalid item id '"+icon+"' in column 'ICON' at line "+i+" in file '"+path+"'.");
 						int imageIndex = items[icon].imageIndex;
-						string[] l = split[4].Split(new char[]{','}, StringSplitOptions.RemoveEmptyEntries);
+						string[] l = split[3].Split(new char[]{','}, StringSplitOptions.RemoveEmptyEntries);
 						Group group = new Group(name, imageIndex);
 						foreach (string n in l) {
 							short s;
@@ -65,6 +62,9 @@ namespace INVedit
 						}
 						groups.Add(name, group);
 					} else {
+						Image image;
+						try { image = LoadImage(split[2]); }
+						catch (Exception e) { throw new DataException("Failed to load image '"+split[2]+"' at line "+i+" in file '"+path+"' ("+e.Message+").", e); }
 						short id;
 						try { id = short.Parse(split[0]); }
 						catch (Exception e) { throw new DataException("Failed to parse column 'ID' at line "+i+" in file '"+path+"'.", e); }

@@ -36,6 +36,7 @@ namespace INVedit
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
@@ -47,12 +48,15 @@ namespace INVedit
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBox1
 			// 
 			this.pictureBox1.ErrorImage = null;
+			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
 			this.pictureBox1.InitialImage = null;
 			this.pictureBox1.Location = new System.Drawing.Point(9, 11);
 			this.pictureBox1.Name = "pictureBox1";
@@ -62,7 +66,7 @@ namespace INVedit
 			// 
 			// label6
 			// 
-			this.label6.Location = new System.Drawing.Point(11, 106);
+			this.label6.Location = new System.Drawing.Point(11, 120);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(202, 13);
 			this.label6.TabIndex = 17;
@@ -71,25 +75,25 @@ namespace INVedit
 			// 
 			// label7
 			// 
-			this.label7.Location = new System.Drawing.Point(33, 72);
+			this.label7.Location = new System.Drawing.Point(12, 86);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(73, 13);
+			this.label7.Size = new System.Drawing.Size(94, 13);
 			this.label7.TabIndex = 15;
 			this.label7.Text = "Silk icon set:";
 			this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// label5
 			// 
-			this.label5.Location = new System.Drawing.Point(11, 53);
+			this.label5.Location = new System.Drawing.Point(12, 52);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(95, 13);
+			this.label5.Size = new System.Drawing.Size(94, 13);
 			this.label5.TabIndex = 16;
 			this.label5.Text = "More information:";
 			this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// label4
 			// 
-			this.label4.Location = new System.Drawing.Point(76, 92);
+			this.label4.Location = new System.Drawing.Point(76, 106);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(112, 13);
 			this.label4.TabIndex = 14;
@@ -97,7 +101,7 @@ namespace INVedit
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(36, 92);
+			this.label3.Location = new System.Drawing.Point(36, 106);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(42, 13);
 			this.label3.TabIndex = 13;
@@ -105,9 +109,9 @@ namespace INVedit
 			// 
 			// linkLabel3
 			// 
-			this.linkLabel3.Location = new System.Drawing.Point(109, 72);
+			this.linkLabel3.Location = new System.Drawing.Point(109, 86);
 			this.linkLabel3.Name = "linkLabel3";
-			this.linkLabel3.Size = new System.Drawing.Size(88, 13);
+			this.linkLabel3.Size = new System.Drawing.Size(101, 13);
 			this.linkLabel3.TabIndex = 11;
 			this.linkLabel3.TabStop = true;
 			this.linkLabel3.Text = "famfamfam.com";
@@ -115,9 +119,9 @@ namespace INVedit
 			// 
 			// linkLabel2
 			// 
-			this.linkLabel2.Location = new System.Drawing.Point(109, 53);
+			this.linkLabel2.Location = new System.Drawing.Point(109, 52);
 			this.linkLabel2.Name = "linkLabel2";
-			this.linkLabel2.Size = new System.Drawing.Size(99, 13);
+			this.linkLabel2.Size = new System.Drawing.Size(101, 13);
 			this.linkLabel2.TabIndex = 12;
 			this.linkLabel2.TabStop = true;
 			this.linkLabel2.Text = "minecraftforum.net";
@@ -152,11 +156,30 @@ namespace INVedit
 			this.label1.Text = "INVedit ({version}) - by copyboy\r\nC# .NET ({net-version})";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
+			// label9
+			// 
+			this.label9.Location = new System.Drawing.Point(108, 71);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(102, 13);
+			this.label9.TabIndex = 20;
+			this.label9.Text = "epaGamer";
+			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(12, 71);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(94, 13);
+			this.label8.TabIndex = 19;
+			this.label8.Text = "Program icon:";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
 			// AboutForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(222, 126);
+			this.ClientSize = new System.Drawing.Size(222, 140);
+			this.Controls.Add(this.label9);
+			this.Controls.Add(this.label8);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.label7);
@@ -176,6 +199,8 @@ namespace INVedit
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.LinkLabel linkLabel2;
 		private System.Windows.Forms.LinkLabel linkLabel3;
 		private System.Windows.Forms.Label label3;
