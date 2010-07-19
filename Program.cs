@@ -28,15 +28,17 @@ namespace INVedit
 						Process.Start("INVedit.exe", "-finish");
 						return;
 					}
+					args = new string[0];
 				} else if (args[0] == "-finish") {
 					Thread.Sleep(100);
 					File.Delete("_INVedit.exe");
+					args = new string[0];
 				}
 			}
 			
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+			Application.Run(new MainForm(args));
 		}
 	}
 }

@@ -11,6 +11,7 @@ namespace INVedit
 		static Font font1 = new Font(FontFamily.GenericMonospace, 8, FontStyle.Bold);
 		static Font font2 = new Font(FontFamily.GenericMonospace, 10, FontStyle.Bold);
 		protected static Item other = null;
+		ToolTip toolTip = new ToolTip(){ AutomaticDelay = 300 };
 		
 		protected static event Action<ItemSlot> DragBegin = delegate {  };
 		protected static event Action<ItemSlot> DragEnd = delegate {  };
@@ -81,6 +82,7 @@ namespace INVedit
 		protected override void OnDragDrop(DragEventArgs e)
 		{
 			OnDragOver(e);
+			if (e.Effect == DragDropEffects.None) return;
 			Item item = (Item)e.Data.GetData(typeof(Item));
 			if (e.Effect == DragDropEffects.Link) {
 				if (Item == null) {
@@ -101,6 +103,8 @@ namespace INVedit
 				if (e.Effect == DragDropEffects.Copy)
 					Item = new Item(Item.ID, Item.Count, Slot, Item.Damage);
 				else Item.Slot = Slot;
+				toolTip.SetToolTip(this, Item.Name);
+				toolTip.Active = true;
 			}
 			LostFocus += OnLostFocus;
 			Select();
@@ -109,11 +113,14 @@ namespace INVedit
 		public void Set(short id, byte count, short damage)
 		{
 			Item = new Item(id, count, Slot, damage);
+			toolTip.SetToolTip(this, Item.Name);
+			toolTip.Active = true;
 		}
 		
 		public void Clear()
 		{
 			Item = null;
+			toolTip.Active = false;
 		}
 		
 		protected override void OnPaint(PaintEventArgs e)

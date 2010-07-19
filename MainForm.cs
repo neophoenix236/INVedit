@@ -5,9 +5,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Resources;
 using System.Net;
-using System.Diagnostics;
-using System.Threading;
-using System.ComponentModel;
 
 namespace INVedit
 {
@@ -17,12 +14,12 @@ namespace INVedit
 		bool update = true;
 		List<CheckBox> groups = new List<CheckBox>();
 		
-		public MainForm()
+		public MainForm(string[] files)
 		{
 			InitializeComponent();
 			
 			Data.Init("items.txt");
-			CheckForUpdates("http://copy.bplaced.net/mc/INVedit/");
+			CheckForUpdates("http://localhost/");
 			
 			boxItems.LargeImageList = Data.list;
 			boxItems.ItemDrag += ItemDrag;
@@ -45,6 +42,60 @@ namespace INVedit
 			}
 			
 			UpdateItems();
+			
+			foreach (string file in files)
+				if (File.Exists(file)) Open(file);
+		}
+		
+		void Open(string file)
+		{
+			FileInfo info = new FileInfo(file);
+			if (info.Extension.ToLower() == ".inv") {
+				try {
+					Page page = new Page(info.Name);
+					page.file = file;
+					Text = "INVedit - "+page.Text;
+					Inventory.Load(NBT.Tag.Load(page.file)["Inventory"], page.slots);
+					tabControl.TabPages.Add(page);
+					tabControl.SelectedTab = page;
+					btnSave.Enabled = true;
+					btnSaveGame.Enabled = true;
+					btnCloseTab.Enabled = true;
+					btnReload.Enabled = true;
+				} catch (Exception ex) { MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+			} else if (info.Extension.ToLower() == ".dat") {
+				try {
+					Page page = new Page(info.Name);
+					page.file = file;
+					Text = "INVedit - "+page.Text;
+					Inventory.Load(file, page.slots);
+					tabControl.TabPages.Add(page);
+					tabControl.SelectedTab = page;
+					btnSave.Enabled = true;
+					btnSaveGame.Enabled = true;
+					btnCloseTab.Enabled = true;
+					btnReload.Enabled = true;
+				} catch (Exception ex) { MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+			}
+		}
+		
+		protected override void OnDragEnter(DragEventArgs e) {
+			if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+				string[] files = ((string[])e.Data.GetData(DataFormats.FileDrop));
+				foreach (string file in files) {
+					FileInfo info = new FileInfo(file);
+					if (info.Extension.ToLower() == ".inv" || info.Extension.ToLower() == ".dat")
+						e.Effect = DragDropEffects.Copy;
+				}
+			}
+		}
+		protected override void OnDragDrop(DragEventArgs e) {
+			OnDragEnter(e);
+			BringToFront();
+			if (e.Effect == DragDropEffects.None) return;
+			string[] files = ((string[])e.Data.GetData(DataFormats.FileDrop));
+			foreach (string file in files)
+				if (File.Exists(file)) Open(file);
 		}
 		
 		void UpdateItems()
@@ -315,42 +366,9 @@ namespace INVedit
 		
 		void BtnUpdateClick(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("INVedit will now update itself and restart.\nAll unsaved changes will be lost. Continue?",
+			if (MessageBox.Show("INVedit will now close and update itself.\nAll unsaved changes will be lost. Continue?",
 			                    "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-			List<string> download = (List<string>)((ToolStripButton)sender).Tag;
-			WebClient client = new WebClient();
-			int count = download.Count;
-			int finished = 0;
-			Uri uri = new Uri(download[0]);
-			string local = uri.Segments[uri.Segments.Length-1];
-			List<string> args = new List<string>();
-			client.DownloadFileCompleted += delegate(object sender2, AsyncCompletedEventArgs e2) {
-				if (e2.Cancelled) {
-					if (MessageBox.Show(e2.Error.ToString()+"\nContinue?", "Error",
-					                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error) == DialogResult.Cancel) {
-						foreach (string file in args)
-							File.Delete(file);
-						return;
-					}
-				} else {
-					++finished;
-					args.Add(local);
-				}
-				download.RemoveAt(0);
-				if (download.Count > 0) {
-					uri = new Uri(download[0]);
-					local = uri.Segments[uri.Segments.Length-1];
-					Thread.Sleep(350);
-					client.DownloadFileAsync(uri, "_"+local);
-				} else {
-					args.Insert(0, "-update");
-					string arguments = string.Join(" ", args.ToArray());
-					if (args.Contains("INVedit.exe")) Process.Start("_INVedit.exe", arguments);
-					else Process.Start(Application.ExecutablePath, arguments);
-					Close();
-				}
-			};
-			client.DownloadFileAsync(uri, "_"+local);
+			new UpdateForm((List<string>)((ToolStripButton)sender).Tag).Start();
 			Hide();
 		}
 	}

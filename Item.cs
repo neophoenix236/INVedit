@@ -11,6 +11,7 @@ namespace INVedit
 		public short Damage { get; set; }
 		
 		public bool Known { get; set; }
+		public string Name { get; set; }
 		public bool Stackable { get; set; }
 		public short MaxDamage { get; set; }
 		public Image Image { get; set; }
@@ -31,10 +32,12 @@ namespace INVedit
 			if (Data.items.ContainsKey(id)) {
 				Data.Item item = Data.items[id];
 				Known = true;
+				Name = item.name;
 				Stackable = item.stackable;
 				MaxDamage = item.maxDamage;
 				Image = Data.list.Images[item.imageIndex];
 			} else {
+				Name = "Unknown item "+id;
 				Known = false;
 				Stackable = false;
 				MaxDamage = 0;

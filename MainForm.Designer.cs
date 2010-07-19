@@ -289,7 +289,6 @@ namespace INVedit
 			// 
 			// tabControl
 			// 
-			this.tabControl.AllowDrop = true;
 			this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
@@ -303,7 +302,6 @@ namespace INVedit
 			// 
 			// boxItems
 			// 
-			this.boxItems.AllowDrop = true;
 			this.boxItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.boxItems.Location = new System.Drawing.Point(518, 29);
@@ -317,6 +315,7 @@ namespace INVedit
 			// 
 			// MainForm
 			// 
+			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(672, 356);

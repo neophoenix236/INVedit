@@ -21,8 +21,8 @@ namespace INVedit
 		
 		protected override void OnEnabledChanged(EventArgs e)
 		{
-			Default = Enabled ? enabled : disabled;
 			base.OnEnabledChanged(e);
+			Default = Enabled ? enabled : disabled;
 		}
 		
 		protected override void OnDragOver(DragEventArgs e)
